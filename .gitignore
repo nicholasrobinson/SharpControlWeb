@@ -1,0 +1,4 @@
+.gradle/
+.idea/
+SharpControlWeb.iml
+build/
