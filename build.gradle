@@ -1,0 +1,15 @@
+group 'SharpControlWeb'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'org.apache.commons:commons-lang3:3.0.1'
+    compile 'org.json:json:20151123'
+    compile 'commons-io:commons-io:2.4'
+}

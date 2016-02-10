@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Hello World
+<script>
+    function sendCommand(commandAlias) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/api", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(commandAlias);
+    }
+
+    function powerOn() {
+        sendCommand("POWER_ON");
+    }
+
+    function powerOff() {
+        sendCommand("POWER_OFF");
+    }
+
+    function sendCustom(commandAlias) {
+        sendCommand(commandAlias);
+    }
+</script>
+<button onclick="powerOn()">ON</button>
+<button onclick="powerOff()">OFF</button>
+<br />
+<input id="command_alias" type="text" onkeydown="if (event.keyCode == 13) { sendCommand(document.getElementById('command_alias').value); }" />
+<button onclick="sendCustom(document.getElementById('command_alias').value)">Send</button>
+</body>
+</html>

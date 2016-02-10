@@ -1,0 +1,113 @@
+{
+    "com.nicholassavilerobinson.SharpControl.commands.PureSharpControlCommand":
+    {
+        "REMOTE_POWER_OFF": "RSPWR0   \r",
+        "REMOTE_POWER_SERIAL": "RSPW1   \r",
+        "REMOTE_POWER_IP": "RSPW2   \r",
+        "POWER_OFF": "POWR0   \r",
+        "POWER_ON": "POWR1   \r",
+        "INPUT_TOGGLE": "ITGDx   \r",
+        "INPUT_TV": "ITVD0   \r",
+        "INPUT_SELECT": {
+            "command": "IAVD*   \r",
+            "values": [1, 2, 3, 4, 5, 6, 7, 8]
+        },
+        "AV_MODE_SELECT": {
+            "command": "AVMD*** \r",
+            "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 13, 14, 15, 16, 100]
+        },
+        "VOLUME": {
+            "command": "VOLM**  \r",
+            "range": [0, 99]
+        },
+        "H_POSITION": {
+            "command": "HPOS*** \r",
+            "range": [0, 999]
+        },
+        "V_POSITION": {
+            "command": "VPOS*** \r",
+            "range": [0, 999]
+        },
+        "CLOCK_POSITION": {
+            "command": "CLCK*** \r",
+            "range": [0, 180]
+        },
+        "PHASE_POSITION": {
+            "command": "PHSE**  \r",
+            "range": [0, 40]
+        },
+        "VIEW_MODE": {
+            "command": "WIDE**  \r",
+            "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        "MUTE_TOGGLE": "MUTE0   \r",
+        "MUTE_ON": "MUTE1   \r",
+        "MUTE_OFF": "MUTE2   \r",
+        "SURROUND_MODE": {
+            "command": "ACSU*  \r",
+            "values": [0, 1, 2, 4, 5, 6, 7]
+        },
+        "AUDIO_TOGGLE": "ACHA0   \r",
+        "SLEEP_TIMER": {
+            "command": "OFTM*  \r",
+            "values": [0, 1, 2, 3, 4]
+        },
+        "CHANNEL_ANALOG": {
+            "command": "DCCH*** \r",
+            "range": [1, 135]
+        },
+        "CHANNEL_DIGITAL_AIR": {
+            "command": "DA2P****\r",
+            "range": [100, 9999]
+        },
+        "CHANNEL_DIGITAL_CABLE_2P_FRONT": {
+            "command": "DC2U*** \r",
+            "range": [1, 999]
+        },
+        "CHANNEL_DIGITAL_CABLE_2P_REAR": {
+            "command": "DC2L*** \r",
+            "range": [0, 999]
+        },
+        "CHANNEL_DIGITAL_CABLE_1P_LOWER": {
+            "command": "DC10****\r",
+            "range": [0, 9999]
+        },
+        "CHANNEL_DIGITAL_CABLE_1P_UPPER": {
+            "command": "DC11****\r",
+            "range": [0, 6383]
+        },
+        "CHANNEL_UP": "CHUP0   \r",
+        "CHANNEL_DOWN": "CHDW0   \r",
+        "CC_TOGGLE": "CLCP1   \r",
+        "3D_MODE": {
+            "command": "TDCH*  \r",
+            "values": [0, 1, 2, 3, 4, 5, 6, 7]
+        },
+        "REMOTE_BUTTON": {
+            "command": "RCKY**  \r",
+            "values": [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+                20, 21, 22, 23, 24, 27, 28, 29, 30, 31,
+                32, 33, 34, 35, 36, 38, 39, 40, 41, 42,
+                43, 44, 45, 46, 47, 49, 50, 51, 52, 53,
+                54, 55, 56, 57, 58, 59, 60
+            ]
+        }
+    },
+    "com.nicholassavilerobinson.SharpControl.commands.BooleanSharpControlCommand":
+    {
+        "POWER_STATUS": "POWR?   \r"
+    },
+    "com.nicholassavilerobinson.SharpControl.commands.IntegerSharpControlCommand":
+    {
+        "VOLUME_STATUS": "VOLM?   \r"
+    },
+    "com.nicholassavilerobinson.SharpControl.commands.StringSharpControlCommand":
+    {
+        "DEVICE_NAME": "TVNM1   \r",
+        "MODEL_NAME": "MNRD1   \r",
+        "SOFTWARE_VERSION": "SWVN1   \r",
+        "IP_VERSION": "IPPV1   \r"
+    }
+}
