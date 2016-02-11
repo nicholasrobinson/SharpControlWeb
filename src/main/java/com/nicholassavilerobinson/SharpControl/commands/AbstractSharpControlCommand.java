@@ -9,24 +9,23 @@ public abstract class AbstractSharpControlCommand {
     protected String commandAlias;
     protected String command;
     protected Integer[] values;
+    protected Integer parameter;
+    protected int fillCount;
 
     public AbstractSharpControlCommand(String commandAlias, String command) {
         this.commandAlias = commandAlias;
         this.command = command;
         values = null;
+        parameter = null;
+        fillCount = StringUtils.countMatches(command, "*") + StringUtils.countMatches(command, "x");
     }
 
     public boolean setParameter(int parameter) {
-        if (!command.contains("*") && !command.contains("x"))
+        if (!isParametric())
             return false;
         else if (values != null && !Arrays.asList(values).contains(parameter))
             return false;
-        int fillCount = 0;
-        if (command.contains("*"))
-            fillCount = StringUtils.countMatches(command, "*");
-        else if (command.contains("x"))
-            fillCount = StringUtils.countMatches(command, "x");
-        command = command.replaceAll("(\\*|x)+", StringUtils.rightPad(Integer.toString(parameter), fillCount));
+        this.parameter = parameter;
         return true;
     }
 
@@ -40,11 +39,15 @@ public abstract class AbstractSharpControlCommand {
     }
 
     public String getCommand() {
-        return command;
+        return command.replaceAll("(\\*|x)+", StringUtils.rightPad(Integer.toString(parameter), fillCount));
     }
 
     public boolean isParametric() {
         return (command.contains("*") || command.contains("x"));
+    }
+
+    public boolean isParameterSet() {
+        return parameter != null;
     }
 
 }

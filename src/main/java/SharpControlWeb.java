@@ -1,8 +1,6 @@
 import com.nicholassavilerobinson.SharpControl.SharpControl;
 import com.nicholassavilerobinson.SharpControl.SharpControlException;
 import com.nicholassavilerobinson.SharpControl.SharpControlReturnData;
-import com.nicholassavilerobinson.SharpControl.commands.AbstractSharpControlCommand;
-import com.nicholassavilerobinson.SharpControl.commands.PureSharpControlCommand;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -14,6 +12,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class SharpControlWeb {
     public static void main(String[] args) throws Exception {
@@ -26,8 +26,15 @@ public class SharpControlWeb {
 
     static class IndexHandler implements HttpHandler {
         public void handle(HttpExchange t) throws IOException {
-            String root = System.getProperty("user.dir") + "/public_html";
             URI uri = t.getRequestURI();
+            // Default to index.html
+            if (Objects.equals(uri.getPath(), "/")) {
+                try {
+                    uri = new URI("/index.html");
+                } catch (URISyntaxException ignored) {
+                }
+            }
+            String root = System.getProperty("user.dir") + "/public_html";
             File file = new File(root + uri.getPath()).getCanonicalFile();
             if (!file.getPath().startsWith(root)) {
                 // Suspected path traversal attack: reject with 403 error.
@@ -67,19 +74,22 @@ public class SharpControlWeb {
             int statusCode;
             switch (t.getRequestMethod()) {
                 case "POST":
-                    final String commandAlias = IOUtils.toString(t.getRequestBody(), "UTF-8");
+                    final String[] commandParts = IOUtils.toString(t.getRequestBody(), "UTF-8").split(":");
+                    SharpControl sc = new SharpControl(SERVER);
                     try {
                         statusCode = 200;
-                        SharpControl sc = new SharpControl(SERVER);
                         sc.connect();
 //                        SharpControlReturnData rd = sc.sendCommand("REMOTE_BUTTON", 12);
-//                        SharpControlReturnData rd3 = sc.sendCommand("MODEL_NAME");
-                        SharpControlReturnData returnData = sc.sendCommand(commandAlias);
+                        SharpControlReturnData returnData = sc.sendCommand(commandParts);
                         responseString = returnData.getReturnString();
                         sc.disconnect();
                     } catch (SharpControlException e) {
                         statusCode = 500;
                         responseString = e.getMessage();
+                        try {
+                            sc.disconnect();
+                        } catch (SharpControlException ignored) {
+                        }
                     }
                     break;
                 default:

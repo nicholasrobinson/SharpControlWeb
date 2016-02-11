@@ -122,16 +122,17 @@ public class SharpControl {
         }
     }
 
-    public SharpControlReturnData sendCommand(String commandAlias) throws SharpControlException {
-        AbstractSharpControlCommand command = getAbstractSharpControlCommand(commandAlias);
-        return sendCommand(command);
-    }
-
-    public SharpControlReturnData sendCommand(String commandAlias, int parameter) throws SharpControlException {
-        AbstractSharpControlCommand command = getAbstractSharpControlCommand(commandAlias);
-        if (!command.setParameter(parameter))
-            throw new SharpControlException("Unsupported command parameter");
-        return sendCommand(command);
+    public SharpControlReturnData sendCommand(String ... commandParts) throws SharpControlException {
+        if (commandParts.length > 0 && commandParts.length < 3) {
+            AbstractSharpControlCommand command = getAbstractSharpControlCommand(commandParts[0]);
+            if (commandParts.length == 2) {
+                if (!command.setParameter(Integer.valueOf(commandParts[1])))
+                    throw new SharpControlException("Unsupported command parameter");
+            }
+            return sendCommand(command);
+        } else {
+            throw new SharpControlException("Unrecognized command");
+        }
     }
 
     private AbstractSharpControlCommand getAbstractSharpControlCommand(String commandAlias) throws SharpControlException {
@@ -141,7 +142,7 @@ public class SharpControl {
     }
 
     private SharpControlReturnData sendCommand(AbstractSharpControlCommand command) throws SharpControlException {
-        if (command.isParametric())
+        if (command.isParametric() && !command.isParameterSet())
             throw new SharpControlException("Missing command parameter");
         if (DEBUG)
             System.out.println("Sending: " + command.getCommandAlias() + " \"" + command.getCommand().replace("\r", "\\r") + "\"");
