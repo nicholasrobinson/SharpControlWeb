@@ -56,7 +56,7 @@ public class SharpControlWeb {
                 OutputStream os = t.getResponseBody();
                 FileInputStream fs = new FileInputStream(file);
                 final byte[] buffer = new byte[0x10000];
-                int count = 0;
+                int count;
                 while ((count = fs.read(buffer)) >= 0) {
                     os.write(buffer, 0, count);
                 }

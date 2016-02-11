@@ -10,60 +10,60 @@ public class SharpTV {
 
     private static final int PORT = 10002;
 
-    private String hostname;
+    private final String hostname;
     private Socket socket;
     private DataOutputStream socketUpStream;
     private BufferedReader socketDownStream;
 
     public SharpTV(String hostname) {
         this.hostname = hostname;
-        socket = null;
-        socketUpStream = null;
-        socketDownStream = null;
+        this.socket = null;
+        this.socketUpStream = null;
+        this.socketDownStream = null;
     }
 
     public boolean connect() throws SharpTVException{
-        if (!isConnected()) {
+        if (!this.isConnected()) {
             try {
-                socket = new Socket(hostname, PORT);
-                socketUpStream = new DataOutputStream(socket.getOutputStream());
-                socketDownStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                this.socket = new Socket(this.hostname, PORT);
+                this.socketUpStream = new DataOutputStream(this.socket.getOutputStream());
+                this.socketDownStream = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             } catch (IOException e) {
-                throw new SharpTVException("Unable to connect to: " + hostname);
+                throw new SharpTVException("Unable to connect to: " + this.hostname);
             }
         }
         return true;
     }
 
     public boolean disconnect() throws SharpTVException {
-        if (isConnected()) {
+        if (this.isConnected()) {
             try {
-                socket.close();
+                this.socket.close();
             } catch (IOException e) {
-                throw new SharpTVException("Unable to disconnect from: " + hostname);
+                throw new SharpTVException("Unable to disconnect from: " + this.hostname);
             }
         }
         return true;
     }
 
     public boolean isConnected() {
-        return (socket != null);
+        return (this.socket != null);
     }
 
     public boolean write(String data) throws SharpTVException {
         try {
-            socketUpStream.writeBytes(data);
+            this.socketUpStream.writeBytes(data);
         } catch (IOException e) {
-            throw new SharpTVException("Unable to read from: " + hostname);
+            throw new SharpTVException("Unable to read from: " + this.hostname);
         }
         return true;
     }
 
     public String read() throws SharpTVException{
         try {
-            return socketDownStream.readLine();
+            return this.socketDownStream.readLine();
         } catch (IOException e) {
-            throw new SharpTVException("Unable to read from: " + hostname);
+            throw new SharpTVException("Unable to read from: " + this.hostname);
         }
     }
 }

@@ -8,7 +8,7 @@ public class PureSharpControlCommand extends AbstractSharpControlCommand {
 
     public PureSharpControlCommand(String commandAlias, String command, Integer[] values) {
         super(commandAlias, command);
-        setValues(values);
+        this.setValues(values);
     }
 
 }

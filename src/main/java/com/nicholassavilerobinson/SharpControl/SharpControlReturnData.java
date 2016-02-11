@@ -7,9 +7,9 @@ public class SharpControlReturnData {
     public static final boolean BOOLEAN_NOT_SET = false;
     public static final int INTEGER_NOT_SET = -1;
 
-    private AbstractSharpControlCommand command;
-    private String response;
-    private boolean success;
+    private final AbstractSharpControlCommand command;
+    private final String response;
+    private final boolean success;
 
     private boolean returnBoolean = BOOLEAN_NOT_SET;
     private int returnInteger = INTEGER_NOT_SET;
@@ -18,40 +18,40 @@ public class SharpControlReturnData {
     public SharpControlReturnData(AbstractSharpControlCommand command, String response) {
         this.command = command;
         this.response = response;
-        success = (response != null && !response.equals("ERR"));
-        if (success) {
-            returnBoolean = response.equals("1");
+        this.success = (response != null && !response.equals("ERR"));
+        if (this.success) {
+            this.returnBoolean = response.equals("1");
             try {
-                returnInteger = Integer.parseInt(response);
+                this.returnInteger = Integer.parseInt(response);
             } catch(NumberFormatException e) {
                 assert true; // TODO: NOOP
             }
-            returnString = response;
+            this.returnString = response;
         }
     }
 
     public AbstractSharpControlCommand getCommand() {
-        return command;
+        return this.command;
     }
 
     public boolean getSuccess() {
-        return success;
+        return this.success;
     }
 
     public String getResponse() {
-        return response;
+        return this.response;
     }
 
     public boolean getReturnBoolean() {
-        return returnBoolean;
+        return this.returnBoolean;
     }
 
     public int getReturnInteger() {
-        return returnInteger;
+        return this.returnInteger;
     }
 
     public String getReturnString() {
-        return returnString;
+        return this.returnString;
     }
 
 }

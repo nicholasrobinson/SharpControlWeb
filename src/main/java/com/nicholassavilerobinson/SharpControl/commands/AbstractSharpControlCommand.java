@@ -6,24 +6,24 @@ import java.util.Arrays;
 
 public abstract class AbstractSharpControlCommand {
 
-    protected String commandAlias;
-    protected String command;
+    protected final String commandAlias;
+    protected final String command;
     protected Integer[] values;
     protected Integer parameter;
-    protected int fillCount;
+    protected final int fillCount;
 
     public AbstractSharpControlCommand(String commandAlias, String command) {
         this.commandAlias = commandAlias;
         this.command = command;
-        values = null;
-        parameter = null;
-        fillCount = StringUtils.countMatches(command, "*") + StringUtils.countMatches(command, "x");
+        this.values = null;
+        this.parameter = null;
+        this.fillCount = StringUtils.countMatches(command, "*") + StringUtils.countMatches(command, "x");
     }
 
     public boolean setParameter(int parameter) {
-        if (!isParametric())
+        if (!this.isParametric())
             return false;
-        else if (values != null && !Arrays.asList(values).contains(parameter))
+        else if (this.values != null && !Arrays.asList(this.values).contains(parameter))
             return false;
         this.parameter = parameter;
         return true;
@@ -35,19 +35,19 @@ public abstract class AbstractSharpControlCommand {
     }
 
     public String getCommandAlias() {
-        return commandAlias;
+        return this.commandAlias;
     }
 
     public String getCommand() {
-        return command.replaceAll("(\\*|x)+", StringUtils.rightPad(Integer.toString(parameter), fillCount));
+        return this.command.replaceAll("(\\*|x)+", StringUtils.rightPad(Integer.toString(this.parameter), this.fillCount));
     }
 
     public boolean isParametric() {
-        return (command.contains("*") || command.contains("x"));
+        return (this.command.contains("*") || this.command.contains("x"));
     }
 
     public boolean isParameterSet() {
-        return parameter != null;
+        return this.parameter != null;
     }
 
 }

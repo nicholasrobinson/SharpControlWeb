@@ -14,7 +14,7 @@ import static com.nicholassavilerobinson.SharpControl.Utils.getJsonObjectFromFil
 
 public class SharpControl {
 
-    private SharpTV tv;
+    private final SharpTV tv;
 
     private static final boolean DEBUG = true;
     private static final String COMMANDS_FILE = "src/main/java/com/nicholassavilerobinson/SharpControl/commands.json";
@@ -32,7 +32,7 @@ public class SharpControl {
         Constructor classConstructor;
         Iterator<?> categoryCommands;
         Iterator<?> categoriesIterator = categoriesObject.keys();
-        LinkedHashMap<String, AbstractSharpControlCommand> commands = new LinkedHashMap<String, AbstractSharpControlCommand>();
+        LinkedHashMap<String, AbstractSharpControlCommand> commands = new LinkedHashMap<>();
         if (DEBUG)
             System.out.println("========");
         while (categoriesIterator.hasNext()) {
@@ -108,7 +108,7 @@ public class SharpControl {
 
     public boolean connect() throws SharpControlException {
         try {
-            return tv.connect();
+            return this.tv.connect();
         } catch (SharpTVException e) {
             throw new SharpControlException("Unable to connect to TV");
         }
@@ -116,7 +116,7 @@ public class SharpControl {
 
     public boolean disconnect() throws SharpControlException {
         try {
-            return tv.disconnect();
+            return this.tv.disconnect();
         } catch (SharpTVException e) {
             throw new SharpControlException("Unable to disconnect from TV");
         }
@@ -124,19 +124,19 @@ public class SharpControl {
 
     public SharpControlReturnData sendCommand(String ... commandParts) throws SharpControlException {
         if (commandParts.length > 0 && commandParts.length < 3) {
-            AbstractSharpControlCommand command = getAbstractSharpControlCommand(commandParts[0]);
+            AbstractSharpControlCommand command = this.getAbstractSharpControlCommand(commandParts[0]);
             if (commandParts.length == 2) {
                 if (!command.setParameter(Integer.valueOf(commandParts[1])))
                     throw new SharpControlException("Unsupported command parameter");
             }
-            return sendCommand(command);
+            return this.sendCommand(command);
         } else {
             throw new SharpControlException("Unrecognized command");
         }
     }
 
     private AbstractSharpControlCommand getAbstractSharpControlCommand(String commandAlias) throws SharpControlException {
-        if (!isCommandAliasValid(commandAlias))
+        if (!this.isCommandAliasValid(commandAlias))
             throw new SharpControlException("Unrecognized command");
         return SharpControl.commands.get(commandAlias);
     }
@@ -146,11 +146,11 @@ public class SharpControl {
             throw new SharpControlException("Missing command parameter");
         if (DEBUG)
             System.out.println("Sending: " + command.getCommandAlias() + " \"" + command.getCommand().replace("\r", "\\r") + "\"");
-        connect();
+        this.connect();
         SharpControlReturnData returnData;
         try {
-            tv.write(command.getCommand());
-            returnData = new SharpControlReturnData(command, tv.read());
+            this.tv.write(command.getCommand());
+            returnData = new SharpControlReturnData(command, this.tv.read());
         } catch (SharpTVException e) {
             throw new SharpControlException("Unable to communicate with TV");
         }
@@ -170,7 +170,7 @@ public class SharpControl {
     }
 
     private boolean isCommandAliasValid(String command) {
-        return new LinkedList<String>(commands.keySet()).contains(command);
+        return new LinkedList<>(commands.keySet()).contains(command);
     }
 
 }
