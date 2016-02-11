@@ -126,8 +126,12 @@ public class SharpControl {
         if (commandParts.length > 0 && commandParts.length < 3) {
             AbstractSharpControlCommand command = this.getAbstractSharpControlCommand(commandParts[0]);
             if (commandParts.length == 2) {
-                if (!command.setParameter(Integer.valueOf(commandParts[1])))
+                try {
+                    if (!command.setParameter(Integer.valueOf(commandParts[1])))
+                        throw new SharpControlException("Unsupported command parameter");
+                } catch (NumberFormatException ignored) {
                     throw new SharpControlException("Unsupported command parameter");
+                }
             }
             return this.sendCommand(command);
         } else {

@@ -39,7 +39,11 @@ public abstract class AbstractSharpControlCommand {
     }
 
     public String getCommand() {
-        return this.command.replaceAll("(\\*|x)+", StringUtils.rightPad(Integer.toString(this.parameter), this.fillCount));
+        if (this.isParametric() && this.isParameterSet()) {
+            return this.command.replaceAll("(\\*|x)+", StringUtils.rightPad(Integer.toString(this.parameter), this.fillCount));
+        } else {
+            return this.command;
+        }
     }
 
     public boolean isParametric() {
