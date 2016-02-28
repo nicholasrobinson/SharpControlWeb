@@ -17,7 +17,7 @@ public class SharpControl {
     private final SharpTV tv;
 
     private static final boolean DEBUG = true;
-    private static final String COMMANDS_FILE = "src/main/java/com/nicholassavilerobinson/SharpControl/commands.json";
+    private static final String COMMANDS_FILE = "public_html/commands.json";
     public static final LinkedHashMap<String, AbstractSharpControlCommand> commands = readCommandsFromJsonFile();
 
     private static LinkedHashMap<String, AbstractSharpControlCommand> readCommandsFromJsonFile() {
