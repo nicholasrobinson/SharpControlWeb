@@ -12,8 +12,25 @@ repositories {
     mavenCentral()
 }
 
+task buildJar(type: Jar) {
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    into ('public_html') {
+        from {
+            ['public_html/index.html', 'public_html/commands.json']
+        }
+    }
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    with jar
+}
+
 task openUrlInBrowser << {
-    Desktop.desktop.browse "http://localhost:8080".toURI()
+    Desktop.desktop.browse 'http://localhost:8080'.toURI()
 }
 
 run.dependsOn openUrlInBrowser
