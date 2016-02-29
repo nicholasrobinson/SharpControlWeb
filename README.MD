@@ -20,3 +20,6 @@ Nicholas Robinson
 me@nicholassavilerobinson.com
 
 P.S. You 'could' host your SharpControlWeb Remote Control Interface application on the public internet and control your TV from anywhere. If you choose to go this route, please consider the security implications of potentially allowing anyone on the internet to control your TV.
+
+References:
+http://files.sharpusa.com/Downloads/ForHome/HomeEntertainment/LCDTVs/Manuals/mon_man_LC70LE847U_LC60LE847U_LC70LE745U_LC60LE745U_LC80LE844U.pdf
