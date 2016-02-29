@@ -73,9 +73,64 @@
         sendCommand("REMOTE_BUTTON:32")
     }
 
+    function netflix() {
+        sendCommand("REMOTE_BUTTON:59")
+    }
+
+    function enter() {
+        sendCommand("REMOTE_BUTTON:40")
+    }
+
+    function back() {
+        sendCommand("REMOTE_BUTTON:45")
+    }
+
+    function up() {
+        sendCommand("REMOTE_BUTTON:41")
+    }
+
+    function down() {
+        sendCommand("REMOTE_BUTTON:42")
+    }
+
+    function left() {
+        sendCommand("REMOTE_BUTTON:43")
+    }
+
+    function right() {
+        sendCommand("REMOTE_BUTTON:44")
+    }
+
     function sendCustom(commandAlias) {
         sendCommand(commandAlias);
     }
+
+    document.addEventListener("keydown", keyDownTextField, false);
+
+    function keyDownTextField(e) {
+        var keyCode = e.keyCode;
+        switch (keyCode) {
+            case 13:
+                enter();
+                break;
+            case 27:
+                back();
+                break;
+            case 37:
+                left();
+                break;
+            case 38:
+                up();
+                break;
+            case 39:
+                right();
+                break;
+            case 40:
+                down();
+                break;
+        }
+    }
+
 </script>
 <div id="container">
     <table>
@@ -89,6 +144,7 @@
                 <button onclick="powerOn()">ON</button>
                 <button onclick="powerOff()">OFF</button>
                 <button onclick="toggleInput()">INPUT</button>
+                <button onclick="netflix()">Netflix</button>
                 <button onclick="mute()">MUTE</button>
                 <button onclick="volumeUp()">VOL+</button>
                 <button onclick="volumeDown()">VOL-</button>
@@ -102,10 +158,14 @@
                 </datalist>
                 <button onclick="sendCustom(document.getElementById('command_alias').value)">Send</button>
             </td>
-            </tr>
-            <tr>
+        </tr>
+        <tr>
                 <th>Server Response</th>
                 <td><input id="command_response" type="text" size="50" readonly></td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><small>Note: <br /><ul><li>Up</li><li>Down</li><li>Left</li><li>Right</li><li>Enter</li><li>Escape</li></ul>keys will be sent as commands.</small></td>
         </tr>
     </table>
 </div>
