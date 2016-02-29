@@ -1,6 +1,5 @@
-import com.nicholassavilerobinson.SharpControl.SharpControl;
-import com.nicholassavilerobinson.SharpControl.SharpControlException;
-import com.nicholassavilerobinson.SharpControl.SharpControlReturnData;
+package com.nicholassavilerobinson.SharpControl;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -67,19 +66,17 @@ public class SharpControlWeb {
     }
 
     static class ApiHandler implements HttpHandler {
-        private static final String SERVER = "aquos";
-
         public void handle(HttpExchange t) throws IOException {
             String responseString;
             int statusCode;
             switch (t.getRequestMethod()) {
                 case "POST":
                     final String[] commandParts = IOUtils.toString(t.getRequestBody(), "UTF-8").split(":");
-                    SharpControl sc = new SharpControl(SERVER);
+                    final String server = t.getRequestHeaders().getFirst("X-Sharp-Server");
+                    SharpControl sc = new SharpControl(server);
                     try {
                         statusCode = 200;
                         sc.connect();
-//                        SharpControlReturnData rd = sc.sendCommand("REMOTE_BUTTON", 12);
                         SharpControlReturnData returnData = sc.sendCommand(commandParts);
                         responseString = returnData.getReturnString();
                         sc.disconnect();

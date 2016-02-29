@@ -23,8 +23,7 @@ public class SharpControlReturnData {
             this.returnBoolean = response.equals("1");
             try {
                 this.returnInteger = Integer.parseInt(response);
-            } catch(NumberFormatException e) {
-                assert true; // TODO: NOOP
+            } catch(NumberFormatException ignored) {
             }
             this.returnString = response;
         }

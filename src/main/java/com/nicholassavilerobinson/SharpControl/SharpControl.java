@@ -16,7 +16,7 @@ public class SharpControl {
 
     private final SharpTV tv;
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final String COMMANDS_FILE = "public_html/commands.json";
     public static final LinkedHashMap<String, AbstractSharpControlCommand> commands = readCommandsFromJsonFile();
 
