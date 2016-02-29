@@ -73,6 +73,18 @@
         sendCommand("REMOTE_BUTTON:32")
     }
 
+    function channelUp() {
+        sendCommand("REMOTE_BUTTON:34")
+    }
+
+    function channelDown() {
+        sendCommand("REMOTE_BUTTON:35")
+    }
+
+    function menu() {
+        sendCommand("REMOTE_BUTTON:38")
+    }
+
     function netflix() {
         sendCommand("REMOTE_BUTTON:59")
     }
@@ -143,11 +155,16 @@
             <td>
                 <button onclick="powerOn()">ON</button>
                 <button onclick="powerOff()">OFF</button>
+                <br />
                 <button onclick="toggleInput()">INPUT</button>
-                <button onclick="netflix()">Netflix</button>
+                <button onclick="netflix()">NETFLIX</button>
+                <button onclick="menu()">MENU</button>
+                <br />
                 <button onclick="mute()">MUTE</button>
                 <button onclick="volumeUp()">VOL+</button>
                 <button onclick="volumeDown()">VOL-</button>
+                <button onclick="channelUp()">CH+</button>
+                <button onclick="channelDown()">CH-</button>
             </td>
         </tr>
         <tr>
