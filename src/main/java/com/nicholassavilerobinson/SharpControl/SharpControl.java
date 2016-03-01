@@ -10,14 +10,14 @@ import com.nicholassavilerobinson.SharpControl.commands.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import static com.nicholassavilerobinson.SharpControl.Utils.getJsonObjectFromFile;
+import static com.nicholassavilerobinson.SharpControl.Utils.getJsonObjectFromResource;
 
 public class SharpControl {
 
     private final SharpTV tv;
 
     private static final boolean DEBUG = false;
-    private static final String COMMANDS_FILE = "public_html/commands.json";
+    private static final String COMMANDS_RESOURCE = "public_html/commands.json";
     public static final LinkedHashMap<String, AbstractSharpControlCommand> commands = readCommandsFromJsonFile();
 
     private static LinkedHashMap<String, AbstractSharpControlCommand> readCommandsFromJsonFile() {
@@ -93,10 +93,10 @@ public class SharpControl {
         JSONObject obj = null;
         try {
             if (DEBUG)
-                System.out.println("Reading commands from file: " + COMMANDS_FILE);
-            obj = getJsonObjectFromFile(COMMANDS_FILE);
+                System.out.println("Reading commands from file: " + COMMANDS_RESOURCE);
+            obj = getJsonObjectFromResource(COMMANDS_RESOURCE);
         } catch (IOException e) {
-            System.out.println("Commands file not found: " + COMMANDS_FILE);
+            System.out.println("Commands file not found: " + COMMANDS_RESOURCE);
             System.exit(1);
         }
         return obj;

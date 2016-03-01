@@ -5,10 +5,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import org.apache.commons.io.IOUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,33 +30,23 @@ public class SharpControlWeb {
                 } catch (URISyntaxException ignored) {
                 }
             }
-            String root = System.getProperty("user.dir") + "/public_html";
-            File file = new File(root + uri.getPath()).getCanonicalFile();
-            if (!file.getPath().startsWith(root)) {
-                // Suspected path traversal attack: reject with 403 error.
-                String response = "403 (Forbidden)\n";
-                t.sendResponseHeaders(403, response.length());
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("public_html" + uri.getPath());
+            if (is != null) {
+                // Object exists: accept with response code 200.
+                t.sendResponseHeaders(200, 0);
                 OutputStream os = t.getResponseBody();
-                os.write(response.getBytes());
+                final byte[] buffer = new byte[0x10000];
+                int count;
+                while ((count = is.read(buffer)) >= 0) {
+                    os.write(buffer, 0, count);
+                }
                 os.close();
-            } else if (!file.isFile()) {
-                // Object does not exist or is not a file: reject with 404 error.
+            } else {
+                // Object does not exist: reject with 404 error.
                 String response = "404 (Not Found)\n";
                 t.sendResponseHeaders(404, response.length());
                 OutputStream os = t.getResponseBody();
                 os.write(response.getBytes());
-                os.close();
-            } else {
-                // Object exists and is a file: accept with response code 200.
-                t.sendResponseHeaders(200, 0);
-                OutputStream os = t.getResponseBody();
-                FileInputStream fs = new FileInputStream(file);
-                final byte[] buffer = new byte[0x10000];
-                int count;
-                while ((count = fs.read(buffer)) >= 0) {
-                    os.write(buffer, 0, count);
-                }
-                fs.close();
                 os.close();
             }
         }

@@ -1,17 +1,16 @@
 package com.nicholassavilerobinson.SharpControl;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Utils {
 
-    public static JSONObject getJsonObjectFromFile(String filename) throws IOException {
-        File fh = new File(filename);
-        String jsonString = FileUtils.readFileToString(fh, "UTF-8");
-        return new JSONObject(jsonString);
+    public static JSONObject getJsonObjectFromResource(String resource) throws IOException {
+        InputStream is = Utils.class.getClassLoader().getResourceAsStream(resource);
+        return new JSONObject(IOUtils.toString(is, "UTF-8"));
     }
 
 }

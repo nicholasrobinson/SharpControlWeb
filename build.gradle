@@ -18,11 +18,6 @@ task buildJar(type: Jar) {
             it.isDirectory() ? it : zipTree(it)
         }
     }
-    into ('public_html') {
-        from {
-            ['public_html/index.html', 'public_html/commands.json']
-        }
-    }
     manifest {
         attributes 'Main-Class': mainClassName
     }
