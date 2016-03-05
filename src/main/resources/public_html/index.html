@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Sharp Control - Web</title>
     <style>
+        th {
+            vertical-align: top;
+            text-align: left;
+        }
         #container {
             position: absolute;
             top: 50%;
@@ -123,7 +127,9 @@
         var keyCode = e.keyCode;
         switch (keyCode) {
             case 13:
-                enter();
+                if (document.activeElement.id !== "command_alias" && document.activeElement.id !== "send_button") {
+                    enter();
+                }
                 break;
             case 27:
                 back();
@@ -139,6 +145,12 @@
                 break;
             case 40:
                 down();
+                break;
+            case 189:
+                volumeDown();
+                break;
+            case 187:
+                volumeUp();
                 break;
         }
     }
@@ -170,10 +182,10 @@
         <tr>
             <th>Custom Command</th>
             <td>
-                <input placeholder="<COMMAND_ALIAS>[:PARAM]" list="commands" id="command_alias" size="30" onkeydown="if (event.keyCode == 13) { sendCommand(document.getElementById('command_alias').value); }" />
+                <input placeholder="<COMMAND_ALIAS>[:VALUE]" list="commands" id="command_alias" size="30" onkeydown="if (event.keyCode == 13) { sendCommand(document.getElementById('command_alias').value); }" oninput="this.value = this.value.replace(':VALUE', ':');" />
                 <datalist id="commands">
                 </datalist>
-                <button onclick="sendCustom(document.getElementById('command_alias').value)">Send</button>
+                <button id="send_button" onclick="sendCustom(document.getElementById('command_alias').value)">Send</button>
             </td>
         </tr>
         <tr>
@@ -181,8 +193,50 @@
                 <td><input id="command_response" type="text" size="50" readonly></td>
         </tr>
         <tr>
-            <th></th>
-            <td><small>Note: <br /><ul><li>Up</li><li>Down</li><li>Left</li><li>Right</li><li>Enter</li><li>Escape</li></ul>keys will be sent as commands.</small></td>
+            <th>Note</th>
+            <td>
+                <small>
+                    The following keys will be sent as commands:<br />
+                    <table>
+                        <tr>
+                            <th>Key</th>
+                            <th>Command</th>
+                        </tr>
+                        <tr>
+                            <td>&uarr;</td>
+                            <td>Up</td>
+                        </tr>
+                        <tr>
+                            <td>&darr;</td>
+                            <td>Down</td>
+                        </tr>
+                        <tr>
+                            <td>&darr;</td>
+                            <td>Left</td>
+                        </tr>
+                        <tr>
+                            <td>&rarr;</td>
+                            <td>Right</td>
+                        </tr>
+                        <tr>
+                            <td>return</td>
+                            <td>Enter</td>
+                        </tr>
+                        <tr>
+                            <td>esc</td>
+                            <td>Return</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>Volume Down</td>
+                        </tr>
+                        <tr>
+                            <td>+</td>
+                            <td>Volume Up</td>
+                        </tr>
+                    </table>
+                </small>
+            </td>
         </tr>
     </table>
 </div>
