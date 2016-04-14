@@ -1,7 +1,7 @@
 {
     "com.nicholassavilerobinson.SharpControl.commands.PureSharpControlCommand":
     {
-        "REMOTE_POWER_OFF": "RSPWR0   \r",
+        "REMOTE_POWER_OFF": "RSPW0   \r",
         "REMOTE_POWER_SERIAL": "RSPW1   \r",
         "REMOTE_POWER_IP": "RSPW2   \r",
         "POWER_OFF": "POWR0   \r",
