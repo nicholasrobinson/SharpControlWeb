@@ -6,10 +6,18 @@ version '1.1-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = "com.nicholassavilerobinson.SharpControl.SharpControlWeb"
+mainClassName = System.getProperty("mainClassName", "com.nicholassavilerobinson.SharpControl.SharpControlWeb")
 
 repositories {
     mavenCentral()
+}
+
+task openUrlInBrowser << {
+    Desktop.desktop.browse 'http://localhost:8080'.toURI()
+}
+
+run {
+    args System.getProperty("exec.args", "").split()
 }
 
 task buildJar(type: Jar) {
@@ -24,11 +32,9 @@ task buildJar(type: Jar) {
     with jar
 }
 
-task openUrlInBrowser << {
-    Desktop.desktop.browse 'http://localhost:8080'.toURI()
+if (mainClassName == "com.nicholassavilerobinson.SharpControl.SharpControlWeb") {
+    run.dependsOn openUrlInBrowser
 }
-
-run.dependsOn openUrlInBrowser
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'

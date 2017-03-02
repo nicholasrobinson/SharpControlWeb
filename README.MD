@@ -12,6 +12,14 @@ Installation:
 - Download/Clone project folder
 - ./gradlew run
 
+I also added an example of controlling the driver from the command line:
+- ./gradlew run -DmainClassName=com.nicholassavilerobinson.SharpControl.SharpControlCommandLine -Dexec.args="<SERVER> <COMMAND>"
+- e.g. ./gradlew run -DmainClassName=com.nicholassavilerobinson.SharpControl.SharpControlCommandLine -Dexec.args="aquos POWER_ON"
+- e.g. ./gradlew run -DmainClassName=com.nicholassavilerobinson.SharpControl.SharpControlCommandLine -Dexec.args="aquos VOLUME 10"
+
+The full list of commands is available here:
+https://github.com/nicholasrobinson/SharpControlWeb/blob/master/src/main/resources/public_html/commands.json
+
 Please let me know if you find this useful or come up with any novel implementations.
 
 Enjoy!
